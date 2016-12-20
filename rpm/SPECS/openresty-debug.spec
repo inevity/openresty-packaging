@@ -1,5 +1,6 @@
 Name:           openresty-debug
 Version:        1.11.2.2
+#Version:        1.11.2.2m
 Release:        3%{?dist}
 Summary:        The debug version of OpenResty
 
@@ -11,6 +12,7 @@ License:        BSD
 URL:            https://openresty.org/
 
 Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+#Source0:        http://183.134.107.236/openresty-%{version}.tar.gz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 

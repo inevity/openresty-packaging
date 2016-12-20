@@ -1,5 +1,6 @@
 Name:           openresty
 Version:        1.11.2.2
+#Version:        1.11.2.2m
 Release:        7%{?dist}
 Summary:        OpenResty, scalable web platform by extending NGINX with Lua
 
@@ -11,6 +12,7 @@ License:        BSD
 URL:            https://openresty.org/
 
 Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+#Source0:        http://183.134.107.236/openresty-%{version}.tar.gz
 Source1:        openresty.init
 
 #Patch0:         openresty-%{version}.patch
