@@ -1,0 +1,117 @@
+diff -rup openresty-1.11.2.2/bundle/LuaJIT-2.1-20161104/src/lib_aux.c openrestydnion/bundle/LuaJIT-2.1-20161104/src/lib_aux.c
+--- openresty-1.11.2.2/bundle/LuaJIT-2.1-20161104/src/lib_aux.c	2016-10-28 07:40:39.000000000 +0800
++++ openrestydnion/bundle/LuaJIT-2.1-20161104/src/lib_aux.c	2016-12-16 19:15:15.000000000 +0800
+@@ -1,3 +1,4 @@
++#define DNION_ADD_STR_BY_BLOCK
+ /*
+ ** Auxiliary library for the Lua/C API.
+ ** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
+@@ -205,11 +206,32 @@ LUALIB_API char *luaL_prepbuffer(luaL_Bu
+   return B->buffer;
+ }
+ 
++
++#ifdef DNION_ADD_STR_BY_BLOCK
++LUALIB_API void luaL_addlstring(luaL_Buffer *B, const char *s, size_t l)
++{
++  while (l)
++  {
++    size_t min;
++    size_t avail = bufffree(B);
++    if (!avail) {
++      luaL_prepbuffer(B);
++      avail = bufffree(B);
++    }
++    min = avail <= l ? avail : l;
++    memcpy(B->p, s, min);
++    B->p += min;
++    s += min;
++    l -= min;
++  }
++}
++#else
+ LUALIB_API void luaL_addlstring(luaL_Buffer *B, const char *s, size_t l)
+ {
+   while (l--)
+     luaL_addchar(B, *s++);
+ }
++#endif
+ 
+ LUALIB_API void luaL_addstring(luaL_Buffer *B, const char *s)
+ {
+diff -rup openresty-1.11.2.2/bundle/lua-resty-lrucache-0.04/lib/resty/lrucache.lua openrestydnion/bundle/lua-resty-lrucache-0.04/lib/resty/lrucache.lua
+--- openresty-1.11.2.2/bundle/lua-resty-lrucache-0.04/lib/resty/lrucache.lua	2015-01-22 06:42:09.000000000 +0800
++++ openrestydnion/bundle/lua-resty-lrucache-0.04/lib/resty/lrucache.lua	2016-12-09 18:31:30.000000000 +0800
+@@ -185,7 +185,9 @@ end
+ function _M.set(self, key, value, ttl)
+     local hasht = self.hasht
+     hasht[key] = value
+-
++    
++    local evict_value = nil
++    local oldkey = nil
+     local key2node = self.key2node
+     local node = key2node[key]
+     if not node then
+@@ -197,10 +199,11 @@ function _M.set(self, key, value, ttl)
+             -- assert(not queue_is_empty(self.cache_queue))
+             node = queue_last(self.cache_queue)
+ 
+-            local oldkey = node2key[ptr2num(node)]
++            oldkey = node2key[ptr2num(node)]
+             -- print(key, ": evicting oldkey: ", oldkey, ", oldnode: ",
+             --         tostring(node))
+             if oldkey then
++                evict_value = hasht[oldkey]
+                 hasht[oldkey] = nil
+                 key2node[oldkey] = nil
+             end
+@@ -223,6 +226,8 @@ function _M.set(self, key, value, ttl)
+     else
+         node.expire = -1
+     end
++
++    return oldkey, evict_value
+ end
+ 
+ 
+diff -rup openresty-1.11.2.2/bundle/nginx-1.11.2/src/core/ngx_log.c openrestydnion/bundle/nginx-1.11.2/src/core/ngx_log.c
+--- openresty-1.11.2.2/bundle/nginx-1.11.2/src/core/ngx_log.c	2016-07-18 10:19:50.000000000 +0800
++++ openrestydnion/bundle/nginx-1.11.2/src/core/ngx_log.c	2016-12-16 19:15:15.000000000 +0800
+@@ -1,3 +1,4 @@
++#define DNION_LOG_SYS_TIME
+ 
+ /*
+  * Copyright (C) Igor Sysoev
+@@ -90,6 +91,20 @@ static const char *debug_levels[] = {
+ };
+ 
+ 
++#ifdef DNION_LOG_SYS_TIME 
++static double dnion_sys_time()
++{
++  struct timeval tv; 
++  if ( gettimeofday(&tv, 0) != 0 ) 
++  {
++    return 0;
++  }
++
++  return tv.tv_sec + ((double)tv.tv_usec)/1000000;
++}
++#endif
++
++
+ #if (NGX_HAVE_VARIADIC_MACROS)
+ 
+ void
+@@ -117,6 +132,10 @@ ngx_log_error_core(ngx_uint_t level, ngx
+     p = ngx_cpymem(errstr, ngx_cached_err_log_time.data,
+                    ngx_cached_err_log_time.len);
+ 
++#ifdef DNION_LOG_SYS_TIME 
++    p = ngx_slprintf(p, last, " %.3f ", dnion_sys_time());
++#endif
++
+     p = ngx_slprintf(p, last, " [%V] ", &err_levels[level]);
+ 
+     /* pid#tid */
