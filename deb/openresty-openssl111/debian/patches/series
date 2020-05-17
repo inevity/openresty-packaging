@@ -1,1 +1,6 @@
 openssl-1.1.1c-sess_set_get_cb_yield.patch
+0001-Add-support-for-BoringSSL-QUIC-APIs.patch 
+0002-Fix-resumption-secret.patch 
+0003-QUIC-Handle-EndOfEarlyData-and-MaxEarlyData.patch 
+0004-QUIC-Increase-HKDF_MAXBUF-to-2048.patch
+0005-Fall-through-for-0RTT.patch

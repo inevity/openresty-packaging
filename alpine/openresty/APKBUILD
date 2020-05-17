@@ -1,7 +1,7 @@
 # Contributor: Yichun Zhang <admin@openresty.com>
 # Maintainer: Yichun Zhang <admin@openresty.com>
 pkgname="openresty"
-pkgver="1.15.8.3"
+pkgver="1.17.10.1rc1"
 pkgrel=3
 pkgdesc="OpenResty, scalable web platform by extending NGINX with Lua"
 url="https://openresty.org/"
@@ -170,7 +170,7 @@ static() {
     default_static
 }
 
-sha512sums="c895b9c0c14ea65d8604d9a74366b75f6332eb0f668e55cf28a23b14db5658044028e6cc72b19939bf1900f3297d2d95f0c0b74f830d92d4bc4a379224c1d8f9  openresty-1.15.8.3.tar.gz
+sha512sums="9ed58c90677e4b598807ec99f42e5f243acfb4b4314bcee26d09385c045dbfb8d3bb97694f099912fffa86fe941df36433a100d82457ac462d9534557877b845  openresty-1.17.10.1rc1.tar.gz
 c7d2d89634410a7beb1e8d4cb7e168d0a2b067c37889fa67018afa940dcf99b5e05db4b1a1fcad7939fd70a896f2c90854631308ef11a307f4064e7eef329d99  openresty.initd
 20dd7897b9b183d194e11118385a3f0e35b1ed949ee45535b72b739457c32eaf596f769d91863cefb085920874f7eddb22eb25bf153cfd22aa416f29d32094c4  openresty.confd
-222910b3b27f6cc5e8b31b6bff36cc6d955213ed6b28276d38f15a4b3ae828996649260313ec3d1e349976e7976414dd467689e99bf3c72c13fb48b163d6c696  restydoc-less-fix.patch"
+32d4eed2b772e44160c7d06c0d515172bd6d2a7e0014078575b1c46c1ab6c016b8037816de84700032ad6387545c480ebfb69ca514b7de7b894bd0f40f9d7180  restydoc-less-fix.patch"

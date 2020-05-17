@@ -1,5 +1,5 @@
 Name:           openresty-debug
-Version:        1.15.8.3
+Version:        1.17.10.1rc1
 Release:        1%{?dist}
 Summary:        The debug version of OpenResty
 
@@ -10,17 +10,18 @@ Group:          System Environment/Daemons
 License:        BSD
 URL:            https://openresty.org/
 
-Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+#Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+Source1:        openresty-%{version}.tar.gz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  perl-File-Temp
 BuildRequires:  ccache, gcc, make, perl, systemtap-sdt-devel
 BuildRequires:  openresty-zlib-devel >= 1.2.11-3
-BuildRequires:  openresty-openssl-debug-devel >= 1.1.0l-1
+BuildRequires:  openresty-openssl111-debug-devel >= 1.1.0l-1
 BuildRequires:  openresty-pcre-devel >= 8.44-1
 Requires:       openresty-zlib >= 1.2.11-3
-Requires:       openresty-openssl-debug >= 1.1.0l-1
+Requires:       openresty-openssl111-debug >= 1.1.0l-1
 Requires:       openresty-pcre >= 8.44-1
 
 AutoReqProv:        no
@@ -109,6 +110,10 @@ a single box.
     --with-poll_module \
     --with-compat \
     --with-luajit-xcflags='-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT -O0' \
+    --with-http_ssl_module \
+    --build="quiche-$(shell git --git-dir=../quiche/.git rev-parse --short HEAD)" \
+    --with-http_v3_module \
+    --with-quiche=../quiche \
     %{?_smp_mflags}
 
 make %{?_smp_mflags}

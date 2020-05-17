@@ -1,5 +1,5 @@
 Name:           openresty-asan
-Version:        1.15.8.3
+Version:        1.17.10.1rc1
 Release:        1%{?dist}
 Summary:        The clang AddressSanitizer (ASAN) version of OpenResty
 
@@ -11,7 +11,8 @@ License:        BSD
 URL:            https://openresty.org/
 
 
-Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+#Source0:        https://openresty.org/download/openresty-%{version}.tar.gz
+Source1:        openresty-%{version}.tar.gz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -19,11 +20,11 @@ BuildRequires:  ccache, make, perl, systemtap-sdt-devel, clang, valgrind-devel
 
 BuildRequires:  perl-File-Temp
 BuildRequires:  openresty-zlib-asan-devel >= 1.2.11-6
-BuildRequires:  openresty-openssl-asan-devel >= 1.1.0l-1
+BuildRequires:  openresty-openssl111-asan-devel >= 1.1.0l-1
 BuildRequires:  openresty-pcre-asan-devel >= 8.44-1
 
 Requires:       openresty-zlib-asan >= 1.2.11-6
-Requires:       openresty-openssl-asan >= 1.1.0l-1
+Requires:       openresty-openssl111-asan >= 1.1.0l-1
 Requires:       openresty-pcre-asan >= 8.44-1
 
 AutoReqProv:        no
@@ -125,6 +126,10 @@ export ASAN_OPTIONS=detect_leaks=0
     --with-compat \
     --with-luajit-xcflags='-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_USE_VALGRIND -O1 -fno-omit-frame-pointer' \
     --with-no-pool-patch \
+    --with-http_ssl_module \
+    --build="quiche-$(shell git --git-dir=../quiche/.git rev-parse --short HEAD)" \
+    --with-http_v3_module \
+    --with-quiche=../quiche \
     %{?_smp_mflags}
 
 make %{?_smp_mflags}

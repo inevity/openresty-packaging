@@ -12,8 +12,9 @@ JOBS=8
 ZLIB_VER=1.2.11
 PCRE_VER=8.44
 SSL_VER=1.1.0l
-SSL111_VER=1.1.1d
-OR_VER=1.15.8.3
+# SSL111_VER=1.1.1d
+SSL111_VER=1.1.1g
+OR_VER=1.17.10.1rc1
 LEMPLATE_VER=0.15
 TEST_NGINX_VER=0.26
 OPTS=
@@ -182,8 +183,9 @@ openssl111-debug-clean:
 .PHONY: openresty-download
 openresty-download:
 	rm -f *.orig.tar.*
-	wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
-	cp openresty-$(OR_VER).tar.gz openresty_$(OR_VER).orig.tar.gz
+	#wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
+	cp ../../openresty/openresty-$(OR_VER).tar.gz openresty_$(OR_VER).orig.tar.gz
+	#cp openresty-$(OR_VER).tar.gz openresty_$(OR_VER).orig.tar.gz
 
 .PHONY: openresty-build
 openresty-build: | openresty-clean openresty-download
@@ -207,8 +209,10 @@ openresty-clean:
 .PHONY: openresty-debug-download
 openresty-debug-download:
 	rm -f *.orig.tar.*
-	wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
-	cp openresty-$(OR_VER).tar.gz openresty-debug_$(OR_VER).orig.tar.gz
+	#wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
+	#cp openresty-$(OR_VER).tar.gz openresty-debug_$(OR_VER).orig.tar.gz
+	cp ../../openresty/openresty-$(OR_VER).tar.gz openresty-debug_$(OR_VER).orig.tar.gz
+	#cp openresty-$(OR_VER).tar.gz openresty_$(OR_VER).orig.tar.gz
 
 .PHONY: openresty-debug-build
 openresty-debug-build: | openresty-debug-clean openresty-debug-download
@@ -232,8 +236,9 @@ openresty-debug-clean:
 .PHONY: openresty-valgrind-download
 openresty-valgrind-download:
 	rm -f *.orig.tar.*
-	wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
-	cp openresty-$(OR_VER).tar.gz openresty-valgrind_$(OR_VER).orig.tar.gz
+	#wget -nH --cut-dirs=100 --mirror 'https://openresty.org/download/openresty-$(OR_VER).tar.gz'
+	#cp openresty-$(OR_VER).tar.gz openresty-valgrind_$(OR_VER).orig.tar.gz
+	cp ../../openresty/openresty-$(OR_VER).tar.gz openresty-valgrind_$(OR_VER).orig.tar.gz
 
 .PHONY: openresty-valgrind-build
 openresty-valgrind-build: | openresty-valgrind-clean openresty-valgrind-download

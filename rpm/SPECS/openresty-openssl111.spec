@@ -1,5 +1,5 @@
 Name:               openresty-openssl111
-Version:            1.1.1d
+Version:            1.1.1g
 Release:            1%{?dist}
 Summary:            OpenSSL library for OpenResty
 
@@ -13,6 +13,11 @@ Source0:            https://www.openssl.org/source/openssl-%{version}.tar.gz
 #Patch0:             https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-1.1.1e-sess_set_get_cb_yield.patch
 Patch0:             https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-1.1.1c-sess_set_get_cb_yield.patch
 #Patch1:             https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-1.1.0j-parallel_build_fix.patch
+Patch1:              0001-Add-support-for-BoringSSL-QUIC-APIs.patch 
+Patch2:              0002-Fix-resumption-secret.patch 
+Patch3:              0003-QUIC-Handle-EndOfEarlyData-and-MaxEarlyData.patch 
+Patch4:              0004-QUIC-Increase-HKDF_MAXBUF-to-2048.patch
+Patch5:              0005-Fall-through-for-0RTT.patch
 
 BuildRoot:          %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
