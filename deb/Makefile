@@ -17,7 +17,7 @@ SSL111_VER=1.1.1g
 OR_VER=1.17.10.1rc1
 LEMPLATE_VER=0.15
 TEST_NGINX_VER=0.26
-OPTS=
+OPTS=-us -uc
 DISTRO:=$(shell lsb_release -c|awk '{print $$2}')
 
 .PHONY: build
