@@ -1,6 +1,6 @@
-openresty (1.17.10.1-1~[% distro %]1) [% distro %]; urgency=high
+openresty (1.17.10.1rc1-1~[% distro %]1) [% distro %]; urgency=high
 
-  * upgraded OpenResty to 1.17.10.1.
+  * upgraded OpenResty to 1.17.10.1rc1.
 
  -- OpenResty Admin <admin@openresty.com>  Fri, 20 Mar 2020 14:04:13 -0700
 openresty (1.15.8.3-1~[% distro %]1) [% distro %]; urgency=high

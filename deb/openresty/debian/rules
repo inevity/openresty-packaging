@@ -40,7 +40,6 @@ override_dh_auto_configure:
 	  --with-http_gunzip_module \
 	  --with-threads \
 	  --with-luajit-xcflags='-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT' \
-	  --with-dtrace-probes \
 	  --with-http_ssl_module \
 	  --build="quiche-$(shell git --git-dir=../quiche/.git rev-parse --short HEAD)" \
 	  --with-http_v3_module \
