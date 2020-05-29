@@ -1,6 +1,12 @@
 openssl-1.1.1c-sess_set_get_cb_yield.patch
-0001-Add-support-for-BoringSSL-QUIC-APIs.patch 
-0002-Fix-resumption-secret.patch 
-0003-QUIC-Handle-EndOfEarlyData-and-MaxEarlyData.patch 
+0001-Add-support-for-BoringSSL-QUIC-APIs.patch
+0002-Fix-resumption-secret.patch
+0003-QUIC-Handle-EndOfEarlyData-and-MaxEarlyData.patch
 0004-QUIC-Increase-HKDF_MAXBUF-to-2048.patch
 0005-Fall-through-for-0RTT.patch
+0006-Some-cleanup-for-the-main-QUIC-changes.patch
+0007-Prevent-KeyUpdate-for-QUIC.patch
+0008-Test-KeyUpdate-rejection.patch
+0009-Fix-out-of-bounds-read-when-TLS-msg-is-split-up-into.patch
+0001-update-quice-method.patch
+fupdatesetread.patch

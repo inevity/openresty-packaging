@@ -1,17 +1,17 @@
-From 3ee9f3c9890d71168e0fdd3c69cee4b33fa65ddc Mon Sep 17 00:00:00 2001
+From 20dc09b9b24988a1d2408aef5cea9b05fea6f654 Mon Sep 17 00:00:00 2001
 From: Todd Short <tshort@akamai.com>
 Date: Tue, 7 Jan 2020 10:59:08 -0500
-Subject: [PATCH 5/5] Fall-through for 0RTT
+Subject: [PATCH 5/9] Fall-through for 0RTT
 
 ---
  ssl/statem/statem_srvr.c | 7 ++-----
  1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/ssl/statem/statem_srvr.c b/ssl/statem/statem_srvr.c
-index 2f1b84ea66..0b60869558 100644
+index e9713eda32..ffa89d3b54 100644
 --- a/ssl/statem/statem_srvr.c
 +++ b/ssl/statem/statem_srvr.c
-@@ -57,12 +57,9 @@ static int ossl_statem_server13_read_transition(SSL *s, int mt)
+@@ -72,12 +72,9 @@ static int ossl_statem_server13_read_transition(SSL *s, int mt)
                  return 1;
              }
              break;

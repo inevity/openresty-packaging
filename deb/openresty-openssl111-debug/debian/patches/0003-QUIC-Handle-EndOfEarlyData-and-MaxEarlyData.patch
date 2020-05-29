@@ -1,7 +1,7 @@
-From 7cb1ef1d207e7bb93e4d9e5b5faa7699590edc27 Mon Sep 17 00:00:00 2001
+From 0748851fdc498c9e5f3a6b2a4fbbffe7d2af2da9 Mon Sep 17 00:00:00 2001
 From: Todd Short <tshort@akamai.com>
 Date: Wed, 13 Nov 2019 12:11:00 -0500
-Subject: [PATCH 3/5] QUIC: Handle EndOfEarlyData and MaxEarlyData
+Subject: [PATCH 3/9] QUIC: Handle EndOfEarlyData and MaxEarlyData
 
 ---
  ssl/statem/extensions_clnt.c | 12 ++++++++++++
@@ -11,7 +11,7 @@ Subject: [PATCH 3/5] QUIC: Handle EndOfEarlyData and MaxEarlyData
  4 files changed, 34 insertions(+), 2 deletions(-)
 
 diff --git a/ssl/statem/extensions_clnt.c b/ssl/statem/extensions_clnt.c
-index 227584ee5d..a5f86d08b0 100644
+index b8473e7afa..a9f73f07dc 100644
 --- a/ssl/statem/extensions_clnt.c
 +++ b/ssl/statem/extensions_clnt.c
 @@ -1933,6 +1933,18 @@ int tls_parse_stoc_early_data(SSL *s, PACKET *pkt, unsigned int context,
@@ -34,10 +34,10 @@ index 227584ee5d..a5f86d08b0 100644
  
          return 1;
 diff --git a/ssl/statem/extensions_srvr.c b/ssl/statem/extensions_srvr.c
-index e9041bdb8b..a274e86000 100644
+index 8105528c02..602c9da314 100644
 --- a/ssl/statem/extensions_srvr.c
 +++ b/ssl/statem/extensions_srvr.c
-@@ -1935,12 +1935,20 @@ EXT_RETURN tls_construct_stoc_early_data(SSL *s, WPACKET *pkt,
+@@ -1946,12 +1946,20 @@ EXT_RETURN tls_construct_stoc_early_data(SSL *s, WPACKET *pkt,
                                           size_t chainidx)
  {
      if (context == SSL_EXT_TLS1_3_NEW_SESSION_TICKET) {
@@ -61,7 +61,7 @@ index e9041bdb8b..a274e86000 100644
              SSLfatal(s, SSL_AD_INTERNAL_ERROR,
                       SSL_F_TLS_CONSTRUCT_STOC_EARLY_DATA, ERR_R_INTERNAL_ERROR);
 diff --git a/ssl/statem/statem_clnt.c b/ssl/statem/statem_clnt.c
-index 6410414fb6..3e210867c8 100644
+index 64e392cfbf..aa2f5ad3f4 100644
 --- a/ssl/statem/statem_clnt.c
 +++ b/ssl/statem/statem_clnt.c
 @@ -909,6 +909,14 @@ int ossl_statem_client_construct_message(SSL *s, WPACKET *pkt,
@@ -80,10 +80,10 @@ index 6410414fb6..3e210867c8 100644
          *mt = SSL3_MT_END_OF_EARLY_DATA;
          break;
 diff --git a/ssl/statem/statem_srvr.c b/ssl/statem/statem_srvr.c
-index 8cf9c40d15..2f1b84ea66 100644
+index 14cb27e6db..e9713eda32 100644
 --- a/ssl/statem/statem_srvr.c
 +++ b/ssl/statem/statem_srvr.c
-@@ -59,6 +59,10 @@ static int ossl_statem_server13_read_transition(SSL *s, int mt)
+@@ -74,6 +74,10 @@ static int ossl_statem_server13_read_transition(SSL *s, int mt)
              break;
          } else if (s->ext.early_data == SSL_EARLY_DATA_ACCEPTED) {
              if (mt == SSL3_MT_END_OF_EARLY_DATA) {
