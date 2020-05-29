@@ -76,7 +76,6 @@ Provides C header and static library for the debug version of OpenResty's OpenSS
 %build
 ./config \
     no-threads no-asm \
-    enable-ssl3 enable-ssl3-method \
     shared zlib -g -O0 -DPURIFY \
     --prefix=%{openssl_prefix} \
     --libdir=lib \
@@ -95,9 +94,6 @@ make install_sw DESTDIR=%{buildroot}
 chmod +w %{buildroot}%{openssl_prefix}/lib/*.so
 chmod +w %{buildroot}%{openssl_prefix}/lib/*/*.so
 
-rm -rf %{buildroot}%{openssl_prefix}/bin/c_rehash
-rm -rf %{buildroot}%{openssl_prefix}/lib/pkgconfig
-rm -rf %{buildroot}%{openssl_prefix}/misc
 
 # to silence the check-rpath error
 export QA_RPATHS=$[ 0x0002 ]
@@ -120,6 +116,7 @@ rm -rf %{buildroot}
 
 %{openssl_prefix}/include/*
 %attr(0755,root,root) %{openssl_prefix}/lib/*.a
+%attr(0755,root,root) %{openssl_prefix}/lib/pkgconfig/*.pc
 
 
 %changelog

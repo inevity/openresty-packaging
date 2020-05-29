@@ -76,7 +76,6 @@ Provides C header and static library for OpenResty's OpenSSL library.
 %build
 ./config \
     no-threads shared zlib -g \
-    enable-ssl3 enable-ssl3-method \
     --prefix=%{openssl_prefix} \
     --libdir=lib \
     -I%{zlib_prefix}/include \
@@ -92,9 +91,6 @@ make install_sw DESTDIR=%{buildroot}
 chmod 0755 %{buildroot}%{openssl_prefix}/lib/*.so*
 chmod 0755 %{buildroot}%{openssl_prefix}/lib/*/*.so*
 
-rm -rf %{buildroot}%{openssl_prefix}/bin/c_rehash
-rm -rf %{buildroot}%{openssl_prefix}/lib/pkgconfig
-rm -rf %{buildroot}%{openssl_prefix}/misc
 
 # to silence the check-rpath error
 export QA_RPATHS=$[ 0x0002 ]
@@ -117,6 +113,7 @@ rm -rf %{buildroot}
 
 %{openssl_prefix}/include/*
 %{openssl_prefix}/lib/*.a
+%{openssl_prefix}/lib/pkgconfig/*.pc
 
 
 %changelog

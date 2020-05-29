@@ -1,25 +1,13 @@
-From 1deb35b872976846a0e68b9043976fce3a4d4573 Mon Sep 17 00:00:00 2001
-From: Todd Short <tshort@akamai.com>
-Date: Tue, 7 Jan 2020 10:01:23 -0500
-Subject: [PATCH 4/5] QUIC: Increase HKDF_MAXBUF to 2048
-
----
- crypto/kdf/hkdf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
 diff --git a/crypto/kdf/hkdf.c b/crypto/kdf/hkdf.c
-index ae46fad609..722b6c036f 100644
+index 25bf4b729f..6d1a32c885 100644
 --- a/crypto/kdf/hkdf.c
 +++ b/crypto/kdf/hkdf.c
 @@ -15,7 +15,7 @@
  #include "internal/cryptlib.h"
- #include "internal/evp_int.h"
+ #include "crypto/evp.h"
  
 -#define HKDF_MAXBUF 1024
 +#define HKDF_MAXBUF 2048
  
  static unsigned char *HKDF(const EVP_MD *evp_md,
                             const unsigned char *salt, size_t salt_len,
--- 
-2.25.1
-
